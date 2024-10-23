@@ -2,7 +2,7 @@
 #define STUMANAGE_MAIN_H
 #define  _WINSOCK_DEPRECATED_NO_WARNINGS 1
 #define _CRT_SECURE_NO_WARNINGS 1
-// #include <bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <iostream>
 #include <ctime>
 #include <fstream>
@@ -13,26 +13,33 @@
 #include <stdlib.h>
 #define TruePassword "1"
 #define TryPasswordTimes 3
+#define CurrentYear 2024
+#define rei register int
 using namespace std;
 
 /* 菜单布局 */
-void printDividerStar();
-void printShortStar();
-void printLongStar();
-void printItemDot();
-void printCommandSign();
-void printSlowDot();
+void print_dividerstar();
+void print_shortstar();
+void print_longstar();
+void print_itemdot();
+void print_commandsign();
+void print_slowdot();
 
-void printGreetMenu();
-void printMainMenu();
+void print_welcome_logo();
+void print_greeting_menu();
+void print_MAIN_menu();
 
 /* 功能函数 */
 extern int tryPasswordCount;
-void checkLoginPassword(string password);
-char* getTime();
-void switchFunction(char chooseItemId);
+void check_loginPW(string password);
+char* get_time();
+void change_title();
+void choose_fuc(char chooseItemId);
 
 /* icey交互类 */
+void plz_watch_me(); //禁用最小化和关闭按钮，控制台保持前置
+void change_title_icey();
+void change_cmd_color(int type);
 void clear_screen();
 void error_1();
 void error_2();
@@ -48,10 +55,16 @@ class student{
 private:
     string name;
     string id;
-    int DSScore,mathScore,enScore;
+    int DD,MM,YY;
+    int DSScore;
     student * next; //指向下一个学生
 public:
     int check_score(int tempscore);
+    int check_day(int day);
+    int check_month(int month);
+    int check_year(int year);
+    int check_leapyear(int year);
+    int special_check();
     void add();
     // void readFile(istream & in); //有bug的读入文件
     void display(); //打印学生信息
@@ -72,28 +85,28 @@ public:
     ~studentList();         //析构函数
     void add();             //增
     void edit();            //改
-    void removeLast();      //删除表中最后一个节点
+    void remove_last();      //删除表中最后一个节点
     void remove();          //删除表中学生成绩记录
-    void searchById();      //学号查询学生成绩记录
-    void searchByName();    //姓名查询学生成绩记录
-    void sortById();        //按学号排序学生成绩记录
-    void sortByDS();        //按DS排序学生成绩记录
-    void sortByMath();      //按Math排序学生成绩记录
-    void sortByEn();        //按En排序学生成绩记录
+    void search_by_id();      //学号查询学生成绩记录
+    void search_by_name();    //姓名查询学生成绩记录
+    void sort_by_id();        //按学号排序学生成绩记录
+    void sort_by_ds();        //按DS排序学生成绩记录
     void show();            //显示学生信息
+    void show_by_level();     //成绩分级显示
     // void save();            //有bug的文件保存
 
 };
 extern studentList stuL;
-void createStudent();
-void editStudent();
-void deleteStudent();
-void searchStudents();
-void sortStudents();
-void switchSearchFun(char chooseWayId);
-void switchSortFun(char chooseWayId);
-void showAllStudents();
-void printStudentTableTitle();
-void printStudentTableFoot();
+void create_stu();
+void edit_stu();
+void delete_stu();
+void search_stu();
+void sort_stu();
+void switch_search_fuc(char chooseWayId);
+void switch_sort_fuc(char chooseWayId);
+void show_all_stu();
+void print_stu_table_Title();
+void print_stu_table_Foot();
+void print_stu_table_Title_sp(int op);
 
 #endif //STUMANAGE_MAIN_H
