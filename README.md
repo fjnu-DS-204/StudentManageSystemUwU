@@ -14,7 +14,7 @@
 - 当前系统时间展示 :white_check_mark:
 - 传奇文学社社长报出电脑用户名 :white_check_mark:
 - hash表和拉链法处理学号->学号查询
-- 堆排序处理成绩输出white_check_mark
+- 堆排序处理成绩输出 white_check_mark:
 - 数据存储至文件（半完成）（有bug
 - 统计各分数段功能 :white_check_mark:
 - 重构所有交互 :white_check_mark:
