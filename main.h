@@ -15,6 +15,7 @@
 #define TryPasswordTimes 3
 #define CurrentYear 2024
 #define rei register int
+#define PIS pair<int,string>
 using namespace std;
 
 /* 菜单布局 */
@@ -69,7 +70,16 @@ public:
     // void readFile(istream & in); //有bug的读入文件
     void display(); //打印学生信息
     void swap(student *toExchange); //与传入的对象交换信息
+
+    string getid(){return id;}//调用ID和成绩
+    int getds(){return DSScore;}
+    void changenext(student* a){next=a;}    //改next
+    student* getnext(){return next;}
+    
+    //student* getnext(student* a){return a->next;}
 };
+
+
 
 /* 学生链表类 */
 class studentList{
@@ -93,8 +103,12 @@ public:
     void sort_by_ds();        //按DS排序学生成绩记录
     void show();            //显示学生信息
     void show_by_level();     //成绩分级显示
+    
+    void changefirstlast(student* a,student* b){first=a;last=b;}//获取和改变first
+    student* getfirst(){return first;}
     // void save();            //有bug的文件保存
-
+    
+    //student* getfirst(studentList* a){return a->first;}
 };
 extern studentList stuL;
 void create_stu();
@@ -108,5 +122,9 @@ void show_all_stu();
 void print_stu_table_Title();
 void print_stu_table_Foot();
 void print_stu_table_Title_sp(int op);
+
+//student* findId(studentList& stul,string id);//查找id，执行排序
+void heapSortid(student* &a,int n,string arr[]);
+void heapSortDS(student* &a,int n,PIS arr[]);
 
 #endif //STUMANAGE_MAIN_H
