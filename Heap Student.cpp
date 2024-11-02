@@ -14,10 +14,10 @@ void heapifyid(string arr[], int n, int i) {//∞¥ID≈≈–Ú
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
-    if (left < n && arr[left] > arr[largest])
+    if (left < n && arr[left] < arr[largest])
         largest = left;
 
-    if (right < n && arr[right] > arr[largest])
+    if (right < n && arr[right] < arr[largest])
         largest = right;
     if (largest!= i) {
         std::swap(arr[i], arr[largest]);
@@ -85,10 +85,10 @@ void heapifyDS(PIS arr[], int n, int i) {//∞¥≥…º®≈≈–Ú
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
-    if (left < n && arr[left].first > arr[largest].first)
+    if (left < n && arr[left].first < arr[largest].first)
         largest = left;
 
-    if (right < n && arr[right].first > arr[largest].first)
+    if (right < n && arr[right].first < arr[largest].first)
         largest = right;
     if (largest!= i) {
         std::swap(arr[i], arr[largest]);
