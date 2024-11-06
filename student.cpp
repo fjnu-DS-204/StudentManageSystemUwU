@@ -87,10 +87,12 @@ void student::add(){
 /**********************************************************
  * 学生类接口定义
  */
-// void student::readFile(istream & in)//有bug的读入文件
-// {
-//     in>>name>>id>>DSScore>>mathScore>>enScore;
-// }
+bool student::readFile(istream & in)// //有bug的读入文件
+//没有bug的读入文件
+{
+    in>>name>>id>>DD>>MM>>YY>>DSScore;
+    return !in.fail();
+}
 
 void student::display(){ cout<<id<<"\t"<<name<<"  \t"<<DSScore<<"   \t"<<DD<<"/"<<MM<<"/"<<YY<<endl; }
 
@@ -108,35 +110,40 @@ void student::swap(student *toExchange){//与传入的对象交换信息 用于�
 /*******************************************************
  * 学生列表类构造函数
  */
-studentList::studentList(){
-    // in.open("stuDate.txt");//有bug的读入文件
-    // if(!in){
-        // cout<<"\t*欢迎新用户,请先输入用户信息再使用.";
-        // print_shortstar();
-        // cout<<endl;
+studentList::studentList(){//没有bug的读入文件
+    in.open("stuDate.txt");////有bug的读入文件
+    if(!in){
+        cout<<"\t*欢迎新用户,请先输入用户信息再使用.";
+        print_shortstar();
+        cout<<endl;
         first =NULL;
         last =NULL;
         num=0;
-    // }else{
-    //     first=new student;
-    //     last=first;
-    //     num=0;
-    //     while(!in.eof()){
-    //         last->readFile(in);
-    //         //数据结束 但会余留一个空节点
-    //         if(last->id[0]!=NULL){
-    //             last->next=new student;
-    //             last=last->next;
-    //         }
-    //     }
-    //     //删除空节点
-    //     stuL.remove_last();
-
-    //     in.close();
-    //     cout<<"\t*欢迎再次使用,读取学生信息成功.";
-    //     print_shortstar();
-    //     cout<<endl;
-    // }
+    }else{
+        first=new student;
+        last=first;
+        while(last->readFile(in)){
+            last->next=new student;
+            last=last->next;
+            ++num;
+        }
+        // 删除多余的空节点
+        if(last==first) { //为空
+            delete first;
+            first=last=nullptr;
+        }else{  //有数据，删除最后的空节点
+            student* temp=first;
+            while(temp->next!=last){
+                temp=temp->next;
+            }
+            delete last;
+            last=temp;
+            last->next=nullptr;
+        }
+        in.close();
+        cout<<"\t^欢迎再次使用,读取学生信息成功.\n";
+        Sleep(1000);
+    }
 }
 
 /**
@@ -247,10 +254,10 @@ void studentList::edit(){
 void studentList::remove_last(){
     //删除空节点 p为倒数第二个
     student *p=first;
-    while(p->next->next!=NULL){ p=p->next; }
-    free(p->next);
+    while(p->next!=NULL){ p=p->next; }
     p->next=NULL;
     last=p;
+    free(p->next);
 }
 
 /**
@@ -430,21 +437,19 @@ void studentList::show_by_level(){
     }
 }
 
-//有bug的文件保存
-
-// void studentList::save()
-// {
-//     student *t=first;
-//     out.open("stuDate.txt");
-//     for(;t!=NULL;t=t->next)
-//         out<<t->name<<"\t"<<t->id<<"\t"<<t->DSScore<<"\t"
-//            <<t->mathScore<<"\t"<<t->enScore<<'\n';
-//     out.close();
-// }
+//没有bug的文件保存、
+void studentList::save()
+{
+    student *t=first;
+    out.open("stuDate.txt");
+    for(;t!=NULL;t=t->next)
+        out<<t->name<<"\t"<<t->id<<"\t"<<t->DD<<"\t"<<t->MM<<"\t"<<t->YY<<"\t"<<t->DSScore<<"\t"<<'\n';
+    out.close();
+}
 
 studentList::~studentList()
 {
-    // save(); //有bug的文件保存
+    save(); //没有bug的文件保存
 }
 
 void create_stu(){

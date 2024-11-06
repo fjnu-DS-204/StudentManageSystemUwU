@@ -66,7 +66,7 @@ public:
     int check_leapyear(int year);
     int special_check();
     void add();
-    // void readFile(istream & in); //有bug的读入文件
+    bool readFile(istream & in); //有bug的读入文件
     void display(); //打印学生信息
     void swap(student *toExchange); //与传入的对象交换信息
 };
@@ -93,7 +93,7 @@ public:
     void sort_by_ds();        //按DS排序学生成绩记录
     void show();            //显示学生信息
     void show_by_level();     //成绩分级显示
-    // void save();            //有bug的文件保存
+    void save();            //有bug的文件保存
 
 };
 extern studentList stuL;
