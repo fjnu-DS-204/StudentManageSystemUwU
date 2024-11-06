@@ -67,7 +67,7 @@ public:
     int check_leapyear(int year);
     int special_check();
     void add();
-    // void readFile(istream & in); //有bug的读入文件
+    bool readFile(istream & in); //有bug的读入文件
     void display(); //打印学生信息
     void swap(student *toExchange); //与传入的对象交换信息
 
@@ -106,9 +106,8 @@ public:
     
     void changefirstlast(student* a,student* b){first=a;last=b;}//获取和改变first
     student* getfirst(){return first;}
-    // void save();            //有bug的文件保存
-    
-    //student* getfirst(studentList* a){return a->first;}
+    void save();            //有bug的文件保存
+
 };
 extern studentList stuL;
 void create_stu();
