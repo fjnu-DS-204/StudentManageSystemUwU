@@ -1,4 +1,7 @@
 #include "main.h"
+/* ******************************************************** */
+Node* hashTable[MOD]={nullptr};
+/* ******************************************************** */
 
 /******************************************************
  * 学生类函数
@@ -87,8 +90,7 @@ void student::add(){
 /**********************************************************
  * 学生类接口定义
  */
-bool student::readFile(istream & in)// //有bug的读入文件
-//没有bug的读入文件
+bool student::readFile(istream & in)//没有bug的读入文件
 {
     in>>name>>id>>DD>>MM>>YY>>DSScore;
     return !in.fail();
@@ -116,13 +118,18 @@ studentList::studentList(){//没有bug的读入文件
         cout<<"\t*欢迎新用户,请先输入用户信息再使用.";
         print_shortstar();
         cout<<endl;
-        first =NULL;
-        last =NULL;
+        first=NULL;
+        last=NULL;
         num=0;
     }else{
         first=new student;
         last=first;
         while(last->readFile(in)){
+/* ************************************************************** */
+            int index=hashFunction(last->id);
+            Node* newNode=new Node{*last,hashTable[index]};
+            hashTable[index]=newNode;//将读入信息存进哈希表
+/* ************************************************************** */
             last->next=new student;
             last=last->next;
             ++num;
@@ -145,12 +152,11 @@ studentList::studentList(){//没有bug的读入文件
         Sleep(1000);
     }
 }
-
 /**
  *通过Id添加学生信息
  */
 void studentList::add(){
-    student * t =new student;
+    student * t=new student;
     t->add();
     student * p=first;
     while(p){
@@ -176,6 +182,11 @@ void studentList::add(){
         last->display();
         print_stu_table_Foot();
     }
+/* ******************************************************** */
+    int index=hashFunction(t->id);
+    Node* newNode=new Node{*t,hashTable[index]};
+    hashTable[index]=newNode;
+/* ******************************************************** */
 }
 
 /**
@@ -184,7 +195,6 @@ void studentList::add(){
 void studentList::edit(){
     string tempId;
     char isCheck;
-    student *t=first;
 
     print_itemdot(); cout<<"请输入要修改的学生学号:";
     cin>>tempId;
@@ -192,12 +202,23 @@ void studentList::edit(){
         print_itemdot(); cout<<"error!: 学生学号输入有误,学号为十位整数,请再次尝试:";
         cin>>tempId;
     }
-    while(t){
-        if(t->id==tempId) break;
-        t=t->next;
+    // while(t){
+    //     if(t->id==tempId) break;
+    //     t=t->next;
+    // }
+/* ************************************************************** */
+    int index=hashFunction(tempId);
+    Node* p=hashTable[index];
+    student* hash_ID=nullptr;
+    while(p){
+        if(p->stu.id==tempId){
+            hash_ID=&p->stu;
+            break;
+        }
+        p=p->next;
     }
-
-    if(!t){//t到最后为空
+/* ************************************************************** */
+    if(!hash_ID){//t到最后为空
         print_itemdot(); cout<<"error!: 未找到您所要修改的学生,请确认学号后重试"<<endl;
         return;
     }else{
@@ -205,7 +226,7 @@ void studentList::edit(){
         print_shortstar();
         cout<<endl;
         print_stu_table_Title();
-        t->display();
+        hash_ID->display();
         print_stu_table_Foot();
     }
     cout<<endl;
@@ -216,29 +237,42 @@ void studentList::edit(){
         case 'Y':
         case 'y':
         case '\n': {
-            print_itemdot(); cout<<"修改学生姓名:"; cin>>t->name;
+            print_itemdot(); cout<<"修改学生姓名:"; cin>>hash_ID->name;
             int tempScore=0;
 
             print_itemdot(); cout<<"修改DS课程的期末成绩:"; cin>>tempScore;
             while(tempScore<0 || tempScore>100){
                 print_itemdot(); cout<<"error!: 学生成绩输入有误,成绩范围0~100,请再次尝试:"; cin>>tempScore;
             }
-            t->DSScore=tempScore;
+            hash_ID->DSScore=tempScore;
 
             print_itemdot(); cout<<"修改出生日期:"<<endl; int tmp;
             need_redone_in_List_edit:
-            print_itemdot(); cout<<"请输入出生日期(DD):"; cin>>tmp; t->DD=t->check_day(tmp);
-            print_itemdot(); cout<<"请输入出生月份(MM):"; cin>>tmp; t->MM=t->check_month(tmp);
-            print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; t->YY=t->check_year(tmp);
-            if(!t->special_check()) goto need_redone_in_List_edit;
-
+            print_itemdot(); cout<<"请输入出生日期(DD):"; cin>>tmp; hash_ID->DD=hash_ID->check_day(tmp);
+            print_itemdot(); cout<<"请输入出生月份(MM):"; cin>>tmp; hash_ID->MM=hash_ID->check_month(tmp);
+            print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; hash_ID->YY=hash_ID->check_year(tmp);
+            if(!hash_ID->special_check()) goto need_redone_in_List_edit;
+/* ************************************************************** */
+            student *ID=first;
+            while(ID){
+                if(ID->id==tempId){
+                    ID->name=hash_ID->name;
+                    ID->DSScore=hash_ID->DSScore;
+                    ID->DD=hash_ID->DD;
+                    ID->MM=hash_ID->MM;
+                    ID->YY=hash_ID->YY;
+                    break;
+                }
+                ID=ID->next;
+            }
+/* ************************************************************** */
             cout<<"\t>./学生信息已成功修改."<<endl;
             print_stu_table_Title();
-            t->display();
+            hash_ID->display();
             print_stu_table_Foot();
             Sleep(500);
-        }
             break;
+        }
         case 'N':
         case 'n':
         default :
@@ -268,29 +302,69 @@ void studentList::remove(){
     cout<<"\t>./准备删除学生信息 "; print_slowdot();
     cout<<"请输入要删除的学生的学号: ";
     cin>>tempId;
-    student *t=first;
-    student *p=NULL;
+    // student *t=first;
+    // student *p=NULL;
+    // while(t){
+    //     if(t->id==tempId) break;
+    //     p=t; t=t->next;
+    // }
+    // if(!t){//t到最后为空
+    //     print_itemdot();
+    //     cout<<"error!: 未找到要删除的学生,请确认学号后重试"<<endl;
+    //     return;
+    // }
+    // if(!p){//特判第一个就相同
+    //     first=first->next;
+    //     print_itemdot();
+    //     cout<<"Congratulations!: 您已成功删除学生"<<tempId<<endl;
+    //     delete t;
+    // }
+    // else{
+    //     p->next=t->next;//把t的下一个地址赋给p的next
+    //     print_itemdot();
+    //     cout<<"Congratulations!: 您已成功删除学生"<<tempId<<endl;
+    //     delete t;
+    // }
+/* ************************************************************** */
+    int index=hashFunction(tempId);
+    Node* hash_p=hashTable[index];
+    Node* prev=NULL;
+    while(hash_p){
+        if(hash_p->stu.id==tempId){
+            break;
+        }
+        prev=hash_p;
+        hash_p=hash_p->next;
+    }
+    if(!hash_p){
+        print_itemdot();
+        cout<<"error!: 未找到您所要查找的学生,请确认学号后重试"<<endl;
+        return;
+    }
+    if(!prev){
+        hashTable[index]=hash_p->next;
+    }else{
+        prev->next=hash_p->next;
+    }
+    delete hash_p;
+    student* t=first;
+    student* p=NULL;
     while(t){
         if(t->id==tempId) break;
         p=t; t=t->next;
-    }
-    if(!t){//t到最后为空
-        print_itemdot();
-        cout<<"error!: 未找到要删除的学生,请确认学号后重试"<<endl;
-        return;
     }
     if(!p){//特判第一个就相同
         first=first->next;
         print_itemdot();
         cout<<"Congratulations!: 您已成功删除学生"<<tempId<<endl;
         delete t;
-    }
-    else{
+    }else{
         p->next=t->next;//把t的下一个地址赋给p的next
         print_itemdot();
         cout<<"Congratulations!: 您已成功删除学生"<<tempId<<endl;
         delete t;
     }
+/* ************************************************************** */
     --num;
     Sleep(1000);
 }
@@ -300,7 +374,7 @@ void studentList::remove(){
  */
 void studentList::search_by_id(){
     string tempId;
-    student *t=first;
+    // student *t=first;
 
     print_itemdot(); cout<<"请输入要查找的学生学号:";
     cin>>tempId;
@@ -309,22 +383,42 @@ void studentList::search_by_id(){
         cout<<"error!: 学生学号输入有误,学号为十位整数,请再次尝试：";
         cin>>tempId;
     }
-    while(t){
-        if(t->id==tempId) break;
-        t=t->next;
-    }
-
-    if(!t){//t已跑到最后为空
+    // while(t){
+    //     if(t->id==tempId) break;
+    //     t=t->next;
+    // }
+    // if(!t){//t已跑到最后为空
+    //     print_itemdot();
+    //     cout<<"error!: 未找到您所要查找的学生,请确认学号后重试"<<endl;
+    //     return;
+    // }else{
+    //     cout<<"\t*已为您查询到以下学生 "<<endl;
+    //     print_stu_table_Title();
+    //     t->display();
+    //     print_stu_table_Foot();
+    // }
+/* ************************************************************** */
+    int index=hashFunction(tempId);
+    Node* p=hashTable[index];
+    if (!p){
         print_itemdot();
         cout<<"error!: 未找到您所要查找的学生,请确认学号后重试"<<endl;
         return;
-    }else{
-        cout<<"\t*已为您查询到以下学生 "<<endl;
-        print_stu_table_Title();
-        t->display();
-        print_stu_table_Foot();
     }
+    while(p){
+        if(p->stu.id==tempId){
+            cout<<"\t*已为您查询到以下学生"<<endl;
+            print_stu_table_Title();
+            p->stu.display();
+            print_stu_table_Foot();
+            return;
+        }
+        p=p->next;
+    }
+    print_itemdot();
+    cout<<"error!: 未找到您所要查找的学生,请确认学号后重试"<<endl;
 }
+/* ************************************************************** */
 
 /**
  *通过Name搜索学生
@@ -479,10 +573,10 @@ void studentList::save()
     out.close();
 }
 
-studentList::~studentList()
-{
-    save(); //没有bug的文件保存
-}
+// studentList::~studentList()
+// {
+//     save(); //没有bug的文件保存
+// }
 
 void create_stu(){
     cout<<"\t>./正在创建学生信息 ";
