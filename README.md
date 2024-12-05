@@ -13,9 +13,9 @@
 - 学生信息增删改查 :white_check_mark:
 - 当前系统时间展示 :white_check_mark:
 - 传奇文学社社长报出电脑用户名 :white_check_mark:
-- hash表和拉链法处理学号->学号查询
-- 堆排序处理成绩输出
-- 数据存储至文件（半完成）（有bug
+- hash表和拉链法处理学号->学号查询 :white_check_mark:
+- 堆排序处理成绩输出(林初奕在写)
+- 数据存储至文件 :white_check_mark:
 - 统计各分数段功能 :white_check_mark:
 - 重构所有交互 :white_check_mark:
 - 取消右上角关闭和最小化按钮且程序始终保持在前台 :white_check_mark:

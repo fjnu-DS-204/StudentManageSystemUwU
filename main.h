@@ -16,6 +16,7 @@
 #define CurrentYear 2024
 #define rei register int
 using namespace std;
+const int MOD=5;
 
 /* 菜单布局 */
 void print_dividerstar();
@@ -66,7 +67,7 @@ public:
     int check_leapyear(int year);
     int special_check();
     void add();
-    // void readFile(istream & in); //有bug的读入文件
+    bool readFile(istream & in); //有bug的读入文件
     void display(); //打印学生信息
     void swap(student *toExchange); //与传入的对象交换信息
 };
@@ -82,18 +83,18 @@ private:
 
 public:
     studentList();          //学生链表类构造函数
-    ~studentList();         //析构函数
+    // ~studentList();         //析构函数
     void add();             //增
     void edit();            //改
     void remove_last();      //删除表中最后一个节点
     void remove();          //删除表中学生成绩记录
-    void search_by_id();      //学号查询学生成绩记录
+    void search_by_id();
     void search_by_name();    //姓名查询学生成绩记录
     void sort_by_id();        //按学号排序学生成绩记录
     void sort_by_ds();        //按DS排序学生成绩记录
     void show();            //显示学生信息
     void show_by_level();     //成绩分级显示
-    // void save();            //有bug的文件保存
+    void save();            //有bug的文件保存
 
 };
 extern studentList stuL;
@@ -108,5 +109,12 @@ void show_all_stu();
 void print_stu_table_Title();
 void print_stu_table_Foot();
 void print_stu_table_Title_sp(int op);
+
+/* 哈希表 */
+struct Node{
+    student stu;  // 学生对象
+    Node* next;       // 指向下一个节点的指针
+};
+int hashFunction(const string& id);
 
 #endif //STUMANAGE_MAIN_H
