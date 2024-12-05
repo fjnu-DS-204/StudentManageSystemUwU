@@ -15,6 +15,7 @@ int student::check_day(int day){
     return day;
 }
 
+
 int student::check_month(int month){
     if(month<=0||month>12){
         print_itemdot(); cout<<"error!: 学生出生月份输入有误,日期范围1~12,请再次尝试:"; cin>>month;
@@ -147,8 +148,8 @@ studentList::studentList(){//没有bug的读入文件
             last->next=nullptr;
         }
         in.close();
-        // cout<<"\t^欢迎再次使用,读取学生信息成功.\n";
-        // Sleep(1000);
+        cout<<"\t^欢迎再次使用,读取学生信息成功.\n";
+        Sleep(1000);
     }
 }
 /**
@@ -287,10 +288,10 @@ void studentList::edit(){
 void studentList::remove_last(){
     //删除空节点 p为倒数第二个
     student *p=first;
-    while(p->next->next!=NULL){ p=p->next; }
-    free(p->next);
+    while(p->next!=NULL){ p=p->next; }
     p->next=NULL;
     last=p;
+    free(p->next);
 }
 
 /**
@@ -450,18 +451,35 @@ void studentList::search_by_name(){
 /**
  *通过Id排序学生
  */
+
 void studentList::sort_by_id(){
     student *t=first;
     student *p=NULL;
 
-    if(t==NULL){//无数据
+    /*if(t==NULL){//无数据
         print_itemdot();
         cout<<"error!: 当前无学生数据,请先添加后排序"<<endl;
         return;
+    }*/
+
+    int n = 0;
+
+    // 计算链表长度
+    while (t!= nullptr) {
+        n++;
+        t = t->next;
     }
 
-    for(;t->next!=NULL;t=t->next)//冒泡 //需要更新为堆排序
-        for(p=t->next;p!=NULL;p=p->next) if(p->id<t->id) p->swap(t);
+    
+    string arr[n];
+    int i=0;
+    t=first;
+    while (t) {
+        arr[i++] = t->getid();
+        t = t->next;
+    }
+    t=first;
+    heapSortid(t,n,arr);
 
     cout<<"\t*已按学生学号排序成功 "<<endl;
     stuL.show();
@@ -473,20 +491,35 @@ void studentList::sort_by_id(){
 void studentList::sort_by_ds(){
     student *t=first;
     student *p=NULL;
+    int n=0;
 
-    if(t==NULL){//无数据后的退出
+    /*if(t==NULL){//无数据后的退出
         print_itemdot();
         cout<<"error!: 当前无学生数据,请先添加后排序"<<endl;
         return;
+    }*/
+
+    while (t!= nullptr) {
+        n++;
+        t = t->next;
     }
 
-    for(;t->next!=NULL;t=t->next){//链表 简单选择排序法
-        for(p=t->next;p!=NULL;p=p->next){
-            if(p->DSScore>t->DSScore){
-                p->swap(t);
-            }
-        }
+    PIS arr[n];//初始化arr
+    int i=0;
+    t=first;
+    while (t) {
+        arr[i++].second = t->getid();
+        t = t->next;
     }
+    i=0;
+    t=first;
+    while (t) {
+        arr[i++].first = t->getds();
+        t = t->next;
+    }
+
+    t=first;
+    heapSortDS(t,n,arr);
 
     cout<<"\t*已按DS成绩排序成功 ";
     print_shortstar(); cout<<endl;

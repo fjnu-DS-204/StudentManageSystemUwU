@@ -15,6 +15,7 @@
 #define TryPasswordTimes 3
 #define CurrentYear 2024
 #define rei register int
+#define PIS pair<int,string>
 using namespace std;
 const int MOD=5;
 
@@ -70,7 +71,16 @@ public:
     bool readFile(istream & in); //有bug的读入文件
     void display(); //打印学生信息
     void swap(student *toExchange); //与传入的对象交换信息
+
+    string getid(){return id;}//调用ID和成绩
+    int getds(){return DSScore;}
+    void changenext(student* a){next=a;}    //改next
+    student* getnext(){return next;}
+    
+    //student* getnext(student* a){return a->next;}
 };
+
+
 
 /* 学生链表类 */
 class studentList{
@@ -94,6 +104,9 @@ public:
     void sort_by_ds();        //按DS排序学生成绩记录
     void show();            //显示学生信息
     void show_by_level();     //成绩分级显示
+    
+    void changefirstlast(student* a,student* b){first=a;last=b;}//获取和改变first
+    student* getfirst(){return first;}
     void save();            //有bug的文件保存
 
 };
