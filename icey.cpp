@@ -18,6 +18,20 @@ void plz_watch_me(){
     DestroyMenu(hmenu);
     ReleaseDC(hwnd, NULL);
 }
+void full_screen(){
+    HWND hwnd=GetForegroundWindow(); // 获取当前窗口句柄
+    int cx=GetSystemMetrics(SM_CXSCREEN); // 屏幕宽度（像素）
+    int cy=GetSystemMetrics(SM_CYSCREEN); // 屏幕高度（像素）
+
+    // 获取当前窗口样式
+    LONG l_WinStyle=GetWindowLong(hwnd, GWL_STYLE);
+
+    // 修改窗口样式为最大化，无边框但保留标题栏
+    SetWindowLong(hwnd,GWL_STYLE,(l_WinStyle|WS_POPUP|WS_MAXIMIZE));
+
+    // 强制更新窗口位置和大小
+    SetWindowPos(hwnd,HWND_TOP,0,0,cx,cy,SWP_FRAMECHANGED|SWP_SHOWWINDOW);
+}
 
 void change_title_icey(){ system("title icey"); }
 void change_title_collapse(){ system("title collapse"); }

@@ -40,6 +40,7 @@ void choose_fuc(char chooseItemId);
 
 /* icey交互类 */
 void plz_watch_me(); //禁用最小化和关闭按钮，控制台保持前置
+void full_screen();
 void change_title_icey();
 void change_title_collapse();
 void change_cmd_color(int type);
@@ -59,10 +60,10 @@ class student{
 private:
     string name;
     string id;
-    int DD,MM,YY;
-    int DSScore;
     string idcard;
     string phone_number;
+    int DD,MM,YY;
+    int DSScore;
     student * next; //指向下一个学生
     student * tmp;//堆排用到的临时下一个
 public:
@@ -135,10 +136,11 @@ struct Node{
 };
 int hashFunction(const string& id);
 
-//student* findId(studentList& stul,string id);//鏌ユ壘id锛屾墽琛屾帓搴?
-void heapSortid(student* &a,int n,string arr[]);
-void heapSortDS(student* &a,int n,PIS arr[]);
+
 void fix_tmp(student* curr); //tmp赋值给next
 void clear_tmp(student* curr); //清空tmp
+
+void heapSortid(student* &a,int n,string arr[]);
+void heapSortDS(student* &a,int n,PIS arr[]);
 
 #endif //STUMANAGE_MAIN_H
