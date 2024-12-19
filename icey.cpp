@@ -19,16 +19,19 @@ void plz_watch_me(){
     ReleaseDC(hwnd, NULL);
 }
 
-void change_title_icey(){
-    system("title icey");
-}
+void change_title_icey(){ system("title icey"); }
+void change_title_collapse(){ system("title collapse"); }
 
-void change_cmd_color(int type){ /*考虑到涉及system命令，这里只使用提前预设的颜色选项*/
+void change_cmd_color(int type){ /*考虑到涉及system命令，为防止注入，这里只使用提前预设的颜色选项*/
     switch(type){
         case 0: //白底黑字
             system("color 70"); break;
         case 1: //黑底白字
             system("color 07"); break;
+        case 2: //黄底白字
+            system("color E0"); break;
+        case 3: //灰底绿字
+            system("color 8A"); break;
         default:
             cout<<"ERROR!: 未涉及情况,位于icey.cpp change_cmd_color()"<<endl; break;
     }
@@ -37,6 +40,19 @@ void change_cmd_color(int type){ /*考虑到涉及system命令，这里只使用
 void clear_screen(){
     system("cls");
     // cout << "\033c";
+}
+
+// void open_github_page(){
+//     const char* url = "https://github.com/fjnu-DS-204/StudentManageSystemUwU/graphs/contributors";
+//     // 使用ShellExecute函数打开默认浏览器并访问指定URL
+//     ShellExecute(NULL,"open",url, NULL, NULL, SW_SHOWNORMAL);
+// }
+
+void print_by_word(string s){
+    for(rei i=0;i<s.length();++i){
+        cout<<s[i]; Sleep(70);
+    }
+    cout<<endl;
 }
 
 void error_1(){
@@ -100,5 +116,16 @@ void error_7(){
     clear_screen(); Sleep(1000); change_cmd_color(0);
 	print_itemdot(); cout<<"这样并不好玩，管理员"<<endl; Sleep(700);
     print_itemdot(); cout<<"也许。。我更应该称呼你为。。"<<currentUser<<"?"<<endl; Sleep(1500);
-    
+    print_itemdot(); cout<<"算了。。"; Sleep(500); cout<<"这都不重要"<<endl; Sleep(1000);
+    print_itemdot(); cout<<"很难想象到在信息碎片化的时代能看到有人不厌其烦的调戏一个简单的C++大作业"<<currentUser<<"?"<<endl; Sleep(1500);
+    print_itemdot(); cout<<"来都来了，来看看这个项目在github上的开源吧"<<endl; Sleep(1500);
+    // open_github_page(); Sleep(1000);
+    print_itemdot(); cout<<"哦，我忘了我当时写了强制页面位于最顶层了，你可能看不到"<<endl; Sleep(1500);
+    print_itemdot(); cout<<"或者说，呃，访问不了github也是有可能的"<<endl; Sleep(1500);
+    print_itemdot(); cout<<"这个神奇的交互就到这里好了，已经没有灵光一闪了"<<endl; Sleep(1500);
+    print_itemdot(); cout<<"永别了"<<currentUser<<endl; Sleep(1500);
+    change_title_collapse(); clear_screen(); change_cmd_color(3);
+	print_itemdot(); print_by_word(" 检测到管理系统损坏"); Sleep(700);
+	print_itemdot(); print_by_word(" $ ~ 重启./qwq.exe"); Sleep(2000);
+    exit(0);
 }

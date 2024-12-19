@@ -107,6 +107,22 @@ void student::swap(student *toExchange){//与传入的对象交换信息 用于�
     tempYY=YY; YY=toExchange->YY; toExchange->YY=tempYY;
 }
 
+void clear_tmp(student * curr){
+    while(curr){
+        curr->changetmp(nullptr);
+        curr=curr->getnext();
+    }
+}
+
+void fix_tmp(student * curr){
+    //cout<<"now in "<<curr->getid()<<" "<<curr->getds()<<endl;
+    if(curr->getnext()!=nullptr) fix_tmp(curr->getnext());
+    // else throw "i know it.";
+    curr->changenext(curr->gettmp());
+    //if(curr->gettmp()) cout<<"now change "<<curr->getid()<<"-"<<curr->getds()<<"'s next to "<<curr->gettmp()->getid()<<"-"<<curr->gettmp()->getds()<<endl;
+    //else cout<<"this one is last"<<endl;
+}
+
 /*******************************************************
  * 学生列表类构造函数
  */
@@ -141,8 +157,8 @@ studentList::studentList(){//没有bug的读入文件
             last->next=nullptr;
         }
         in.close();
-        cout<<"\t^欢迎再次使用,读取学生信息成功.\n";
-        Sleep(1000);
+        // cout<<"\t^欢迎再次使用,读取学生信息成功.\n";
+        // Sleep(1000);
     }
 }
 
@@ -397,6 +413,7 @@ void studentList::sort_by_id(){
 void studentList::sort_by_ds(){
     student *t=first;
     student *p=NULL;
+    clear_tmp(t);
     int n=0;
 
     /*if(t==NULL){//无数据后的退出
@@ -409,27 +426,38 @@ void studentList::sort_by_ds(){
         n++;
         t = t->next;
     }
-
+    // cout<<"n="<<n<<endl;
     PIS arr[n];//初始化arr
     int i=0;
     t=first;
     while (t) {
-        arr[i++].second = t->getid();
+        arr[i].second = t->getid(),arr[i++].first = t->getds();
         t = t->next;
     }
-    i=0;
-    t=first;
-    while (t) {
-        arr[i++].first = t->getds();
-        t = t->next;
-    }
+    // cout<<"success in overrun,i="<<i<<endl;
+    // i=0;
+    // t=first;
+    // while (t) {
+    //     arr[i++].first = t->getds();
+    //     t = t->next;
+    // }
 
     t=first;
+    
+    // cout<<"here"<<endl;
+    //以上没问题
     heapSortDS(t,n,arr);
+
+    t=first;
+    /*while(t){
+        cout<<t->getid()<<" "<<t->getds()<<endl;
+        t=t->getnext();
+    }*/
 
     cout<<"\t*已按DS成绩排序成功 ";
     print_shortstar(); cout<<endl;
     stuL.show_by_level();
+
 }
 
 /**
@@ -448,23 +476,23 @@ void studentList::show_by_level(){
     if(!t){ print_stu_table_Title(); print_itemdot(); cout<<"error!: 当前无学生信息"<<endl; print_stu_table_Foot(); return ;}
     if(t->DSScore<=100 && t->DSScore>90){
         print_stu_table_Title_sp(0);
-        while(t->DSScore>90){ t->display(); t=t->next; }
+        while(t->DSScore>90){ t->display(); if(t->next!=NULL){ t=t->next;}else{ break;}  }
         print_stu_table_Foot();
     }if(t->DSScore<=90 && t->DSScore>80){
         print_stu_table_Title_sp(1);
-        while(t->DSScore>80){ t->display(); t=t->next; }
+        while(t->DSScore>80){ t->display();  if(t->next!=NULL){ t=t->next;}else{ break;}  }
         print_stu_table_Foot();
     }if(t->DSScore<=80 && t->DSScore>70){
         print_stu_table_Title_sp(2);
-        while(t->DSScore>70){ t->display(); t=t->next; }
+        while(t->DSScore>70){ t->display();  if(t->next!=NULL){ t=t->next;}else{ break;} }
         print_stu_table_Foot();
     }if(t->DSScore<=70 && t->DSScore>60){
         print_stu_table_Title_sp(3);
-        while(t->DSScore>60){ t->display(); t=t->next; }
+        while(t->DSScore>60){ t->display();  if(t->next!=NULL){ t=t->next;}else{ break;} }
         print_stu_table_Foot();
     }if(t->DSScore<=60){
         print_stu_table_Title_sp(4);
-        while(t){ t->display(); t=t->next; }
+        while(t){ t->display();  if(t->next!=NULL){ t=t->next;}else{ break;} }
         print_stu_table_Foot();
     }
 }
@@ -479,10 +507,16 @@ void studentList::save()
     out.close();
 }
 
-studentList::~studentList()
-{
-    save(); //没有bug的文件保存
+// studentList::~studentList()
+// {
+//     save(); //没有bug的文件保存
+// }
+
+void studentList::changefirstlast(student* a,student* b){
+    first=a;last=b;
 }
+
+student* studentList::getfirst(){ return first;}
 
 void create_stu(){
     cout<<"\t>./正在创建学生信息 ";

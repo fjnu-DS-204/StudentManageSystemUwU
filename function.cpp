@@ -56,9 +56,9 @@ void choose_fuc(char chooseItemId){
         case '6': //修改学生信息
             edit_stu(); break;
         case '0':{ //退出系统
-            // stuL.save(); //有bug的文件保存
-            // print_itemdot();cout<<"嘻嘻，数据保存成功了，看起来bug修好了"<<endl;
-            print_itemdot();cout<<"不嘻嘻，你的数据保存不了哦"<<endl;
+            stuL.save();
+            print_itemdot();cout<<"嘻嘻，数据保存成功了，看起来bug修好了"<<endl;
+            // print_itemdot();cout<<"不嘻嘻，你的数据保存不了哦"<<endl;
             print_itemdot();cout<<"感谢使用喵，拜拜喵"<<endl;
             getchar(),getchar();
             exit(0);
@@ -67,7 +67,7 @@ void choose_fuc(char chooseItemId){
         default:
             //输出提示,再次输入
             Failure_num++;
-                 if(Failure_num==1){ error_7(); cin>>chooseItemId; choose_fuc(chooseItemId); }
+                 if(Failure_num==1){ error_1(); cin>>chooseItemId; choose_fuc(chooseItemId); }
             else if(Failure_num==2){ error_2(); cin>>chooseItemId; choose_fuc(chooseItemId); }
             else if(Failure_num==3){ error_3(); cin>>chooseItemId; choose_fuc(chooseItemId); }
             else if(Failure_num==4){ error_4(); cin>>chooseItemId; choose_fuc(chooseItemId); }
