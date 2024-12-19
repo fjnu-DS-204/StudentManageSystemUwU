@@ -41,8 +41,10 @@ void choose_fuc(char chooseItemId);
 /* icey交互类 */
 void plz_watch_me(); //禁用最小化和关闭按钮，控制台保持前置
 void change_title_icey();
+void change_title_collapse();
 void change_cmd_color(int type);
 void clear_screen();
+void print_by_word(string s);
 void error_1();
 void error_2();
 void error_3();
@@ -60,6 +62,7 @@ private:
     int DD,MM,YY;
     int DSScore;
     student * next; //指向下一个学生
+    student * tmp;//堆排用到的临时下一个
 public:
     int check_score(int tempscore);
     int check_day(int day);
@@ -74,13 +77,12 @@ public:
 
     string getid(){return id;}//调用ID和成绩
     int getds(){return DSScore;}
-    void changenext(student* a){next=a;}    //改next
-    student* getnext(){return next;}
-    
+    void changenext(student* a){ next=a;}    //改next
+    void changetmp(student* a){ tmp=a;}
+    student* getnext(){ return next;}
+    student* gettmp(){ return tmp;}
     //student* getnext(student* a){return a->next;}
 };
-
-
 
 /* 学生链表类 */
 class studentList{
@@ -105,8 +107,9 @@ public:
     void show();            //显示学生信息
     void show_by_level();     //成绩分级显示
     
-    void changefirstlast(student* a,student* b){first=a;last=b;}//获取和改变first
-    student* getfirst(){return first;}
+    // void changefirstlast(student* a,student* b){first=a;last=b;}//获取和改变first
+    void changefirstlast(student* a,student* b);//获取和改变first
+    student* getfirst();
     void save();            //有bug的文件保存
 
 };
@@ -129,5 +132,9 @@ struct Node{
     Node* next;       // 指向下一个节点的指针
 };
 int hashFunction(const string& id);
+
+
+void fix_tmp(student* curr); //tmp赋值给next
+void clear_tmp(student* curr); //清空tmp
 
 #endif //STUMANAGE_MAIN_H
