@@ -135,7 +135,9 @@ struct Node{
 };
 int hashFunction(const string& id);
 
-
+//student* findId(studentList& stul,string id);//鏌ユ壘id锛屾墽琛屾帓搴?
+void heapSortid(student* &a,int n,string arr[]);
+void heapSortDS(student* &a,int n,PIS arr[]);
 void fix_tmp(student* curr); //tmp赋值给next
 void clear_tmp(student* curr); //清空tmp
 
