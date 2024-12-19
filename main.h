@@ -17,6 +17,7 @@
 #define rei register int
 #define PIS pair<int,string>
 using namespace std;
+const int MOD=5;
 
 /* 菜单布局 */
 void print_dividerstar();
@@ -99,7 +100,7 @@ public:
     void edit();            //改
     void remove_last();      //删除表中最后一个节点
     void remove();          //删除表中学生成绩记录
-    void search_by_id();      //学号查询学生成绩记录
+    void search_by_id();
     void search_by_name();    //姓名查询学生成绩记录
     void sort_by_id();        //按学号排序学生成绩记录
     void sort_by_ds();        //按DS排序学生成绩记录
@@ -125,9 +126,12 @@ void print_stu_table_Title();
 void print_stu_table_Foot();
 void print_stu_table_Title_sp(int op);
 
-//student* findId(studentList& stul,string id);//查找id，执行排序
-void heapSortid(student* &a,int n,string arr[]);
-void heapSortDS(student* &a,int n,PIS arr[]);
+/* 哈希表 */
+struct Node{
+    student stu;  // 学生对象
+    Node* next;       // 指向下一个节点的指针
+};
+int hashFunction(const string& id);
 
 
 void fix_tmp(student* curr); //tmp赋值给next
