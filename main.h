@@ -61,6 +61,8 @@ private:
     string id;
     int DD,MM,YY;
     int DSScore;
+    string idcard;
+    string phonenumber;
     student * next; //指向下一个学生
     student * tmp;//堆排用到的临时下一个
 public:
