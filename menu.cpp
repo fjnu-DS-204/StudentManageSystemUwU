@@ -32,8 +32,8 @@ void print_greeting_menu(){
     print_itemdot(); cout<<"Made by noone & xjs114 & 001Pro-Max & shingosen"<<endl;
     print_itemdot(); cout<<"当前系统时间是:  "; cout << get_time();
     print_itemdot(); cout<<"进入该系统设有密码,只有"<<TryPasswordTimes<<"次机会"<<endl;
-    print_itemdot(); cout<<"温馨向您提示,登录密码为: "<<TruePassword<<endl;
-    print_itemdot(); cout<<"请您输入密码:"; cin>>password; check_loginPW(password);
+    print_itemdot(); cout<<"注意喵,登录密码为: "<<TruePassword<<endl;
+    print_itemdot(); cout<<"请输入密码谢谢喵:"; cin>>password; check_loginPW(password);
 }
 
 void print_MAIN_menu(){
