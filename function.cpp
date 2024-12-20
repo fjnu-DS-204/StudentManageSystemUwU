@@ -61,7 +61,8 @@ void choose_fuc(char chooseItemId){
             print_itemdot();cout<<"嘻嘻，数据保存成功了，看起来bug修好了"<<endl;
             // print_itemdot();cout<<"不嘻嘻，你的数据保存不了哦"<<endl;
 
-            print_itemdot();cout<<"感谢使用喵，拜拜喵"<<endl;
+            print_itemdot();cout<<"感谢使用喵，拜拜喵"<<endl; Sleep(700);
+            print_kapoo();
             getchar(),getchar();
             exit(0);
         }
