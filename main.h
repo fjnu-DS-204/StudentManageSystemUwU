@@ -47,6 +47,9 @@ void change_title_collapse();
 void change_cmd_color(int type);
 void clear_screen();
 void print_by_word(string s);
+void open_github_page(); //打开默认浏览器并访问项目在github的地址
+string get_execute_path(); //程序运行路径
+void restart_program(); //重启程序
 void error_1();
 void error_2();
 void error_3();
