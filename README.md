@@ -25,7 +25,7 @@
 
 - 致敬国产游戏艾希，对不合法输入的交互更个性化（大嘘
 - 更多的猫猫虫
-- 更多的彩色猫猫虫
+- 更多的彩色猫猫虫，使用了[我的项目](https://github.com/noone40404/picture-to-colorful-01-generator)
 
 ## 废案
 
