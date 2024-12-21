@@ -30,7 +30,12 @@ void print_slowdot();
 void print_welcome_logo();
 void print_greeting_menu();
 void print_MAIN_menu();
-void print_kapoo();
+
+/* kapoo */
+void setConsoleColor(const string& colorCode);
+void resetConsoleColor();
+void print_Capoo();
+void print_colorful_Capoo();
 
 /* 功能函数 */
 extern int tryPasswordCount;

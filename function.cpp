@@ -62,7 +62,7 @@ void choose_fuc(char chooseItemId){
             // print_itemdot();cout<<"不嘻嘻，你的数据保存不了哦"<<endl;
 
             print_itemdot();cout<<"感谢使用喵，拜拜喵"<<endl; Sleep(700);
-            print_kapoo();
+            print_colorful_Capoo();
             getchar(),getchar();
             exit(0);
         }
