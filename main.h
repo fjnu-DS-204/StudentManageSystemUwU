@@ -11,6 +11,8 @@
 #include <string>
 #include <windows.h>
 #include <stdlib.h>
+#include <unordered_set>
+
 #define TruePassword "1"
 #define TryPasswordTimes 3
 #define CurrentYear 2024
@@ -62,14 +64,16 @@ private:
     int DD,MM,YY;
     int DSScore;
     string idcard;
-    string phonenumber;
+    string phone_number;
     student * next; //指向下一个学生
     student * tmp;//堆排用到的临时下一个
 public:
     int check_score(int tempscore);
+    string check_phonenumber(string tempphone_number);
     int check_day(int day);
     int check_month(int month);
     int check_year(int year);
+    string check_idcard(string tempidard);
     int check_leapyear(int year);
     int special_check();
     void add();
@@ -135,7 +139,9 @@ struct Node{
 };
 int hashFunction(const string& id);
 
-
+//student* findId(studentList& stul,string id);//鏌ユ壘id锛屾墽琛屾帓搴?
+void heapSortid(student* &a,int n,string arr[]);
+void heapSortDS(student* &a,int n,PIS arr[]);
 void fix_tmp(student* curr); //tmp赋值给next
 void clear_tmp(student* curr); //清空tmp
 
