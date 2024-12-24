@@ -123,13 +123,15 @@ void student::add(){
     print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; YY=check_year(tmp);
     if(!special_check()) goto need_redone_in_edit;
    
-    //身份证 
+    //身份证
+    string tempidcard;
     print_itemdot(); cout<<"请输入身份证(十八位):"; cin>>tempidcard;
      while(tempidcard.length()!=18){ print_itemdot(); cout<<"error!: 学生身份证号码输入有误,改号码为十八位整数,请再次尝试:"; cin>>tempidcard;}
     idcard=check_idcard(tempidcard);
 
   
      //电话号码
+    string tempphone_number;
     print_itemdot();cout<<"请输入电话号码(十一位)：";cin>>tempphone_number;
     while(tempphone_number.length()!=11){print_itemdot();cout<<"error!:学生电话号码输入有误，电话号码应为十一位整数，请再次尝试:";cin>>tempphone_number;}
     phone_number=check_phonenumber(tempphone_number);
@@ -317,8 +319,8 @@ void studentList::edit(){
             print_itemdot(); cout<<"请输入出生日期(DD):"; cin>>tmp; hash_ID->DD=hash_ID->check_day(tmp);
             print_itemdot(); cout<<"请输入出生月份(MM):"; cin>>tmp; hash_ID->MM=hash_ID->check_month(tmp);
             print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; hash_ID->YY=hash_ID->check_year(tmp);
-            print_itemdot(); cout<<"修改身份证号:"; cin>>tmp; hash_ID->idcard=hash_ID->check_idcard(syz);
-            print_itemdot(); cout<<"修改手机号:"; cin>>tmp; hash_ID->phone_number=hash_ID->check_phonenumber(syz);
+            print_itemdot(); cout<<"修改身份证号:"; cin>>syz; hash_ID->idcard=hash_ID->check_idcard(syz);
+            print_itemdot(); cout<<"修改手机号:"; cin>>syz; hash_ID->phone_number=hash_ID->check_phonenumber(syz);
             if(!hash_ID->special_check()) goto need_redone_in_List_edit;
 /* ************************************************************** */
             student *ID=first;
@@ -368,7 +370,7 @@ void studentList::remove_last(){
 void studentList::remove(){
     string tempId;
     cout<<"\t>./准备删除学生信息 "; print_slowdot();
-    cout<<"请输入要删除的学生的学号: ";
+    cout<<"\t>./请输入要删除的学生的学号: ";
     cin>>tempId;
     // student *t=first;
     // student *p=NULL;

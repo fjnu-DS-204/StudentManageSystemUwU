@@ -33,6 +33,12 @@ void print_welcome_logo();
 void print_greeting_menu();
 void print_MAIN_menu();
 
+/* kapoo */
+void setConsoleColor(const string& colorCode);
+void resetConsoleColor();
+void print_Capoo();
+void print_colorful_Capoo();
+
 /* 功能函数 */
 extern int tryPasswordCount;
 void check_loginPW(string password);
@@ -42,11 +48,15 @@ void choose_fuc(char chooseItemId);
 
 /* icey交互类 */
 void plz_watch_me(); //禁用最小化和关闭按钮，控制台保持前置
+void full_screen();
 void change_title_icey();
 void change_title_collapse();
 void change_cmd_color(int type);
 void clear_screen();
 void print_by_word(string s);
+void open_github_page(); //打开默认浏览器并访问项目在github的地址
+string get_execute_path(); //程序运行路径
+void restart_program(); //重启程序
 void error_1();
 void error_2();
 void error_3();
@@ -61,6 +71,8 @@ class student{
 private:
     string name;
     string id;
+    string idcard;
+    string phone_number;
     int DD,MM,YY;
     int DSScore;
     string idcard;
@@ -144,5 +156,8 @@ void heapSortid(student* &a,int n,string arr[]);
 void heapSortDS(student* &a,int n,PIS arr[]);
 void fix_tmp(student* curr); //tmp赋值给next
 void clear_tmp(student* curr); //清空tmp
+
+void heapSortid(student* &a,int n,string arr[]);
+void heapSortDS(student* &a,int n,PIS arr[]);
 
 #endif //STUMANAGE_MAIN_H
