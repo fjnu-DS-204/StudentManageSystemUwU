@@ -312,13 +312,13 @@ void studentList::edit(){
             }
             hash_ID->DSScore=tempScore;
 
-            print_itemdot(); cout<<"修改出生日期:"<<endl; int tmp;
+            print_itemdot(); cout<<"修改出生日期:"<<endl; int tmp; string syz;
             need_redone_in_List_edit:
             print_itemdot(); cout<<"请输入出生日期(DD):"; cin>>tmp; hash_ID->DD=hash_ID->check_day(tmp);
             print_itemdot(); cout<<"请输入出生月份(MM):"; cin>>tmp; hash_ID->MM=hash_ID->check_month(tmp);
             print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; hash_ID->YY=hash_ID->check_year(tmp);
-            print_itemdot(); cout<<"修改身份证号:"; cin>>hash_ID->idcard;
-            print_itemdot(); cout<<"修改手机号:"; cin>>hash_ID->phone_number;
+            print_itemdot(); cout<<"修改身份证号:"; cin>>tmp; hash_ID->idcard=hash_ID->check_idcard(syz);
+            print_itemdot(); cout<<"修改手机号:"; cin>>tmp; hash_ID->phone_number=hash_ID->check_phonenumber(syz);
             if(!hash_ID->special_check()) goto need_redone_in_List_edit;
 /* ************************************************************** */
             student *ID=first;
