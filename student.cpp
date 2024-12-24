@@ -64,10 +64,49 @@ int student::check_score(int tempScore){
     return tempScore;
 }
 
+string student::check_idcard(string tempidcard){
+    if(tempidcard.length()!=18){
+        print_itemdot();cout<<"error!:学生身份证号输入有误，身份证号为十八位数字，请再次尝试:";cin>>tempidcard;
+        return check_idcard(tempidcard);
+    }
+    
+        string idcard_prefix =tempidcard.substr(0,3);
+        unordered_set<string> legal_prefixes={
+            "110", "120", "130", "140", "150", "210", "220", "230", 
+                                           "310", "320", "330", "340", "350", "360", "370", "410", 
+                                           "420", "430", "440", "450", "460", "500", "510", "520", 
+                                           "530", "540", "610", "620", "630", "640", "650", "710","810","820","910"
+        };
+        if(legal_prefixes.find(idcard_prefix)==legal_prefixes.end()){
+            print_itemdot();
+        cout<<"error!:学生身份证号的前三位不符合合法地区代码，请再次尝试："<< endl;
+        cin>>tempidcard;
+        return check_idcard(tempidcard);
+
+
+        }
+        
+    
+
+    return tempidcard;
+
+}
+string student::check_phonenumber(string tempphone_number){
+    if(tempphone_number.length()!=11){
+        print_itemdot();cout<<"error!:学生电话号码输入有误，电话号码为十一位数字，请再次尝试:";cin>>tempphone_number;
+        return check_phonenumber(tempphone_number);
+    }
+    return tempphone_number;
+
+}
+
 void student::add(){
     print_itemdot(); cout<<"请输入学生姓名:"; cin>>name;
     string tempId="";
     int tempScore=0;
+    string tempidcard="";
+    string tempphone_number="";
+
     //学号处理
     print_itemdot(); cout<<"请输入学生学号(十位):"; cin>>tempId;
     while(tempId.length()!=10){ print_itemdot(); cout<<"error!: 学生学号输入有误,学号为十位整数,请再次尝试:"; cin>>tempId;}
@@ -88,13 +127,14 @@ void student::add(){
     string tempidcard;
     print_itemdot(); cout<<"请输入身份证(十八位):"; cin>>tempidcard;
      while(tempidcard.length()!=18){ print_itemdot(); cout<<"error!: 学生身份证号码输入有误,改号码为十八位整数,请再次尝试:"; cin>>tempidcard;}
-    idcard=tempidcard;
+    idcard=check_idcard(tempidcard);
+
   
      //电话号码
     string tempphone_number;
     print_itemdot();cout<<"请输入电话号码(十一位)：";cin>>tempphone_number;
     while(tempphone_number.length()!=11){print_itemdot();cout<<"error!:学生电话号码输入有误，电话号码应为十一位整数，请再次尝试:";cin>>tempphone_number;}
-    phone_number=tempphone_number;
+    phone_number=check_phonenumber(tempphone_number);
     
     next=NULL;
 }
@@ -274,13 +314,13 @@ void studentList::edit(){
             }
             hash_ID->DSScore=tempScore;
 
-            print_itemdot(); cout<<"修改出生日期:"<<endl; int tmp;
+            print_itemdot(); cout<<"修改出生日期:"<<endl; int tmp; string syz;
             need_redone_in_List_edit:
             print_itemdot(); cout<<"请输入出生日期(DD):"; cin>>tmp; hash_ID->DD=hash_ID->check_day(tmp);
             print_itemdot(); cout<<"请输入出生月份(MM):"; cin>>tmp; hash_ID->MM=hash_ID->check_month(tmp);
             print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; hash_ID->YY=hash_ID->check_year(tmp);
-            print_itemdot(); cout<<"修改身份证号:"; cin>>hash_ID->idcard;
-            print_itemdot(); cout<<"修改手机号:"; cin>>hash_ID->phone_number;
+            print_itemdot(); cout<<"修改身份证号:"; cin>>syz; hash_ID->idcard=hash_ID->check_idcard(syz);
+            print_itemdot(); cout<<"修改手机号:"; cin>>syz; hash_ID->phone_number=hash_ID->check_phonenumber(syz);
             if(!hash_ID->special_check()) goto need_redone_in_List_edit;
 /* ************************************************************** */
             student *ID=first;
