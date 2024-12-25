@@ -124,14 +124,12 @@ void student::add(){
     if(!special_check()) goto need_redone_in_edit;
    
     //身份证
-    string tempidcard;
     print_itemdot(); cout<<"请输入身份证(十八位):"; cin>>tempidcard;
      while(tempidcard.length()!=18){ print_itemdot(); cout<<"error!: 学生身份证号码输入有误,改号码为十八位整数,请再次尝试:"; cin>>tempidcard;}
     idcard=check_idcard(tempidcard);
 
   
      //电话号码
-    string tempphone_number;
     print_itemdot();cout<<"请输入电话号码(十一位)：";cin>>tempphone_number;
     while(tempphone_number.length()!=11){print_itemdot();cout<<"error!:学生电话号码输入有误，电话号码应为十一位整数，请再次尝试:";cin>>tempphone_number;}
     phone_number=check_phonenumber(tempphone_number);
