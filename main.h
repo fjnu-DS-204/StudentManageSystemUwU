@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <unordered_set>
+#pragma GCC optimize(2)
 
 #define TruePassword "1"
 #define TryPasswordTimes 3
