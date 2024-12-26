@@ -71,23 +71,49 @@ string student::check_idcard(string tempidcard){
     }
     
         string idcard_prefix =tempidcard.substr(0,3);
-        unordered_set<string> legal_prefixes={
-            "110", "120", "130", "140", "150", "210", "220", "230", 
+    string legal_prefixes[40]={"110", "120", "130", "140", "150", "210", "220", "230", 
                                            "310", "320", "330", "340", "350", "360", "370", "410", 
                                            "420", "430", "440", "450", "460", "500", "510", "520", 
                                            "530", "540", "610", "620", "630", "640", "650", "710","810","820","910"
-        };
-        if(legal_prefixes.find(idcard_prefix)==legal_prefixes.end()){
+    };
+
+    bool flag = false; 
+    for (int i = 0; i < 40; i++) {
+        if (idcard_prefix == legal_prefixes[i]) {
+            flag = true; 
+            break; 
+        }
+    }
+        if(flag==false){
             print_itemdot();
-            cout<<"error!:学生身份证号的前三位不符合合法地区代码，请再次尝试："<< endl;
-            cin>>tempidcard;
-            return check_idcard(tempidcard);
+        cout<<"error!:学生身份证号的前三位不符合合法地区代码，请再次尝试：";
+        cin>>tempidcard;  return check_idcard(tempidcard);
+        }
+
+        string idcard_birthyear =tempidcard.substr(6,4);
+        int yearexamine= std::stoi(idcard_birthyear);
+        if(yearexamine!=YY){
+            print_itemdot();
+            cout<<"error!:学生身份证号的出生年份与先前您输入的出生年份不符，请再次尝试；";
+            cin>>tempidcard; return check_idcard(tempidcard);
         }
         
-    
+         string idcard_birthmonth =tempidcard.substr(10,2);
+        int monthexamine= std::stoi(idcard_birthmonth);
+        if(monthexamine!=MM){
+            print_itemdot();
+            cout<<"error!:学生身份证号的出生月份与先前您输入的出生月份不符，请再次尝试；";
+            cin>>tempidcard; return check_idcard(tempidcard);
+        }
 
+         string idcard_birthday =tempidcard.substr(12,2);
+        int dayexamine= std::stoi(idcard_birthday);
+        if(dayexamine!=DD){
+            print_itemdot();
+            cout<<"error!:学生身份证号的出生日期与先前您输入的出生日期不符，请再次尝试；";
+            cin>>tempidcard; return check_idcard(tempidcard);
+        }
     return tempidcard;
-
 }
 string student::check_phonenumber(string tempphone_number){
     if(tempphone_number.length()!=11){
@@ -121,9 +147,9 @@ void student::add(){
     print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; YY=check_year(tmp);
     if(!special_check()) goto need_redone_in_edit;
    
-    //身份证
+    //身份证 
     print_itemdot(); cout<<"请输入身份证(十八位):"; cin>>tempidcard;
-     while(tempidcard.length()!=18){ print_itemdot(); cout<<"error!: 学生身份证号码输入有误,改号码为十八位整数,请再次尝试:"; cin>>tempidcard;}
+     while(tempidcard.length()!=18){ print_itemdot(); cout<<"error!: 学生身份证号码输入有误,该号码为十八位整数,请再次尝试:"; cin>>tempidcard;}
     idcard=check_idcard(tempidcard);
 
   
@@ -336,7 +362,7 @@ void studentList::remove_last(){
 void studentList::remove(){
     string tempId;
     cout<<"\t>./准备删除学生信息 "; print_slowdot();
-    cout<<"\t>./请输入要删除的学生的学号: ";
+    cout<<"请输入要删除的学生的学号: ";
     cin>>tempId;
     // student *t=first;
     // student *p=NULL;
